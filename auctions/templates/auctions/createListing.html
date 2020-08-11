@@ -1,0 +1,51 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+Create Listing
+{% endblock %}
+
+{% block body %}
+
+<div class="container pt-4">
+    <form action="{% url 'createListing' %}" method="post">
+        {% csrf_token %}
+        <div class="form-row form-group mt-2">
+            <div class="col">
+                <label for="title">Title</label>
+                <input autofocus type="text" placeholder="Enter Title" name="title" class="form-control">
+            </div>
+            <div class="col">
+                <label for="startBid">Starting Bid</label>
+                <input type="number" name="startBid" class="form-control" placeholder="0">
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" rows="3"
+                placeholder="Enter Description of Product"></textarea>
+        </div>
+        <div class="form-row form-group mt-2">
+            <div class="col">
+                <label for="url">Image Url</label>
+                <input type="url" placeholder="Enter Image Url" name="url" class="form-control">
+            </div>
+            <div class="col">
+                <label for="category">Category</label>
+                <select class="form-control" name="category">
+                    {% for category in categories %}
+                    <option value={{ category }}>
+                        {{ category.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success mt-2 py-2 px-4">Submit</button>
+        </div>
+        <input type="hidden" name="user" value="{{ user }}">
+    </form>
+</div>
+
+{% endblock %}

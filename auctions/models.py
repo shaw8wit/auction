@@ -20,6 +20,7 @@ class AuctionListing(models.Model):
     startBid = models.DecimalField(decimal_places=2, max_digits=5)
     description = models.CharField(max_length=128)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    imageUrl = models.URLField()
 
     def __str__(self):
         return f"{self.id} : {self.name} in {self.category.name}\nPosted at : {self.date}\nValue : {self.startBid}\nDescription : {self.description}\nPosted By : {self.user.username}"
