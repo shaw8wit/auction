@@ -1,13 +1,13 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div class="container p-4">
+<div class="container p-4 parent">
     <h2>Active Listings</h2>
 
     {% for obj in objects %}
 
     <a href="{% url 'details' obj.id %}">
-        <div class="mt-4 card">
+        <div class="mt-3 card singleCard">
             <div class="card-body">
                 <div class="row offset-sm-1">
                     <div class="col">

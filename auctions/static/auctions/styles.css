@@ -1,5 +1,11 @@
+html {
+    height: 100%;
+    width: auto;
+}
 body {
     color: black;
+    height: 100%;
+    width: 100%;
 }
 img {
     width: 200px;
@@ -14,7 +20,20 @@ a:hover {
     text-decoration: none;
     color: black;
 }
-.big{
-    
+.big {
     object-fit: scale-down;
+}
+.singleCard {
+    height: 50%;
+    width: auto;
+}
+.singleCard a:hover{
+    text-decoration: brown;
+}
+.parent {
+    height: 90%;
+    width: auto;
+}
+.title{
+    font-size: 2rem;
 }

@@ -1,11 +1,12 @@
 {% extends 'auctions/layout.html'%}
 
 {% block title %}
+{{ item.name }}
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <h2>Listing: {{ item.name }}</h2>
+<div class="container parent">
+    <h4>Listing: <span class="title">{{ item.name }}</span></h4>
     <img class="big" src="{{ item.imageUrl }}" alt="{{ item.id }}">
     {{ item.description }}
     <br>
@@ -13,14 +14,28 @@
     <br>
     {% for bid in bids %}
     {{ bid }}
+    {% empty %}
+    No Bids Yet!
     {% endfor %}<br>
-    <input type="number" class="form-control" placeholder="Bid" step=".01">
-    <button class="btn btn-info">Place Bid</button>
-    Details
-    <ul>
-        <li>Listed By: {{ item.user.username }}</li>
-        <li>Category: {{ item.category.name }}</li>
-        <li>Listed On: {{ item.date }}</li>
-    </ul>
+    <form action="#" method="post" class="my-3">
+        <div class="form-group">
+            <input type="number" class="form-control" placeholder="Bid" step=".01">
+        </div>
+        <div class="row justify-content-around">
+            <button class="btn btn-primary" type="submit">Place Bid</button>
+            {% if item.user.username == user.username %}
+            <button class="btn btn-warning" type="button">End Auction</button>
+            {% endif %}
+        </div>
+    </form>
+
+    <div class="container">
+        Details
+        <ul>
+            <li>Listed By: {{ item.user.username }}</li>
+            <li>Category: {{ item.category.name }}</li>
+            <li>Listed On: {{ item.date }}</li>
+        </ul>
+    </div>
 </div>
 {% endblock %}
