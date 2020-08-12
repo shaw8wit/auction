@@ -2,25 +2,22 @@
 
 {% block body %}
 <div class="container p-4 parent">
-    <h2>Active Listings</h2>
+    <h2 class="m-3">Active Listings</h2>
 
     {% for obj in objects %}
-
     <a href="{% url 'details' obj.id %}">
         <div class="mt-3 card singleCard">
-            <div class="card-body">
-                <div class="row offset-sm-1">
-                    <div class="col">
-                        <img src="{{ obj.imageUrl }}" alt="Loading...">
-                    </div>
-                    <div class="col">
-                        <h2 class="card-title">
-                            {{ obj.name }}
-                        </h2>
-                        <div class="card-text">
-                            <h5>Price: ${{ obj.startBid }}</h5>
-                            <h6>Created: {{ obj.date }}</h6>
-                        </div>
+            <div class="card-body row">
+                <div class="col image-container">
+                    <img src="{{ obj.imageUrl }}" alt="Loading...">
+                </div>
+                <div class="col">
+                    <h2 class="card-title">
+                        {{ obj.name }}
+                    </h2>
+                    <div class="card-text">
+                        <h5>Price: ${{ obj.startBid }}</h5>
+                        <h6>Created: {{ obj.date }}</h6>
                     </div>
                 </div>
             </div>

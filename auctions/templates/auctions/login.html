@@ -2,23 +2,29 @@
 
 {% block body %}
 
-    <h2>Login</h2>
+<div class="container p-4 text-center card" style="max-width: 600px;">
 
-    {% if message %}
+    <div class="card-body m-4">
+        <h2 class="card-title">Login</h2>
+
+        {% if message %}
         <div>{{ message }}</div>
-    {% endif %}
+        {% endif %}
 
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
-        </div>
-        <input class="btn btn-primary" type="submit" value="Login">
-    </form>
+        <form action="{% url 'login' %}" method="post" class="card-text mb-3">
+            {% csrf_token %}
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Login">
+        </form>
 
-    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+        Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+    </div>
+
+</div>
 
 {% endblock %}

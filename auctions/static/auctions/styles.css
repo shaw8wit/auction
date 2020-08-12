@@ -1,39 +1,27 @@
-html {
+html, body {
     height: 100%;
     width: auto;
 }
-body {
-    color: black;
-    height: 100%;
-    width: 100%;
-}
-img {
-    width: 200px;
-    height: 200px;
-    object-fit: scale-down;
-}
-a {
+.parent a, a:hover {
     text-decoration: none;
     color: black;
-}
-a:hover {
-    text-decoration: none;
-    color: black;
-}
-.big {
-    object-fit: scale-down;
 }
 .singleCard {
     height: 50%;
     width: auto;
-}
-.singleCard a:hover{
-    text-decoration: brown;
+    margin: 1%;
 }
 .parent {
-    height: 90%;
-    width: auto;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
 }
 .title{
     font-size: 2rem;
+}
+img {
+    max-height: 200px;
+    width: auto;
+    overflow: hidden;
 }
