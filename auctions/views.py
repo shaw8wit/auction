@@ -10,7 +10,10 @@ import datetime as dt
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    obj = AuctionListing.objects.all()
+    return render(request, "auctions/index.html", {
+        "objects": obj
+    })
 
 
 def login_view(request):
@@ -77,7 +80,7 @@ def createListing(request):
         listing = AuctionListing.objects.create(
             name=title, category=category, date=date, startBid=startBid, description=description, user=user, imageUrl=imageUrl)
         listing.save()
-        print("saved!")
+        return HttpResponseRedirect(reverse("index"))
     categories = Category.objects.all()
     return render(request, "auctions/createListing.html", {
         'categories': categories
