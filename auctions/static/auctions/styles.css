@@ -6,3 +6,15 @@ img {
     height: 200px;
     object-fit: scale-down;
 }
+a {
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+.big{
+    
+    object-fit: scale-down;
+}

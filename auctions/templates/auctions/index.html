@@ -5,24 +5,27 @@
     <h2>Active Listings</h2>
 
     {% for obj in objects %}
-    <div class="mt-4 card">
-        <div class="card-body">
-            <div class="row offset-sm-1">
-                <div class="col">
-                    <img src="{{ obj.imageUrl }}" alt="yo">
-                </div>
-                <div class="col">
-                    <h2 class="card-title">
-                        {{ obj.name }}
-                    </h2>
-                    <div class="card-text">
-                        <h5>Price: ${{ obj.startBid }}</h5>
-                        <h6>Created: {{ obj.date }}</h6>
+
+    <a href="{% url 'details' obj.id %}">
+        <div class="mt-4 card">
+            <div class="card-body">
+                <div class="row offset-sm-1">
+                    <div class="col">
+                        <img src="{{ obj.imageUrl }}" alt="Loading...">
+                    </div>
+                    <div class="col">
+                        <h2 class="card-title">
+                            {{ obj.name }}
+                        </h2>
+                        <div class="card-text">
+                            <h5>Price: ${{ obj.startBid }}</h5>
+                            <h6>Created: {{ obj.date }}</h6>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </a>
     {% endfor %}
 
 </div>

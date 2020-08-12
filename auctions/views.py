@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Category, AuctionListing
+from .models import User, Category, AuctionListing, Bid
 
 import datetime as dt
 
@@ -81,7 +81,15 @@ def createListing(request):
             name=title, category=category, date=date, startBid=startBid, description=description, user=user, imageUrl=imageUrl)
         listing.save()
         return HttpResponseRedirect(reverse("index"))
-    categories = Category.objects.all()
     return render(request, "auctions/createListing.html", {
-        'categories': categories
+        'categories': Category.objects.all()
+    })
+
+
+def details(request, details):
+    item = AuctionListing.objects.get(id=details)
+    bids = Bid.objects.filter(auctionListing=item)
+    return render(request, "auctions/details.html", {
+        'item': item,
+        'bids': bids,
     })

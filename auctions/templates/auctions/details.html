@@ -1,0 +1,26 @@
+{% extends 'auctions/layout.html'%}
+
+{% block title %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>Listing: {{ item.name }}</h2>
+    <img class="big" src="{{ item.imageUrl }}" alt="{{ item.id }}">
+    {{ item.description }}
+    <br>
+    Start Bid : ${{ item.startBid }}
+    <br>
+    {% for bid in bids %}
+    {{ bid }}
+    {% endfor %}<br>
+    <input type="number" class="form-control" placeholder="Bid" step=".01">
+    <button class="btn btn-info">Place Bid</button>
+    Details
+    <ul>
+        <li>Listed By: {{ item.user.username }}</li>
+        <li>Category: {{ item.category.name }}</li>
+        <li>Listed On: {{ item.date }}</li>
+    </ul>
+</div>
+{% endblock %}
