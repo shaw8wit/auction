@@ -37,5 +37,14 @@
             <li>Listed On: {{ item.date }}</li>
         </ul>
     </div>
+
+    <form action="{% url 'comment' item.id %}" method="post" class="m-4 p-4">
+        {% csrf_token %}
+        <div class="form-group">
+            <textarea name="comment" rows="5" class="form-control" placeholder="Enter a comment"></textarea>
+        </div>
+        <input type="hidden" name="user" value="{{ user }}">
+        <button class="btn btn-dark" type="submit">Comment</button>
+    </form>
 </div>
 {% endblock %}

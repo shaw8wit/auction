@@ -86,8 +86,8 @@ def createListing(request):
     })
 
 
-def details(request, details):
-    item = AuctionListing.objects.get(id=details)
+def details(request, id):
+    item = AuctionListing.objects.get(id=id)
     bids = Bid.objects.filter(auctionListing=item)
     return render(request, "auctions/details.html", {
         'item': item,
@@ -99,3 +99,23 @@ def categories(request):
     return render(request, "auctions/categories.html", {
         'categories': Category.objects.all()
     })
+
+
+def filter(request, name):
+    category = Category.objects.get(name=name)
+    obj = AuctionListing.objects.filter(category=category)
+    return render(request, "auctions/index.html", {
+        "objects": obj
+    })
+
+
+def comment(request, id):
+    if request.method == 'POST':
+        auctionListing = AuctionListing.objects.get(id=id)
+        user = User.objects.get(username=request.POST["user"])
+        commentValue = request.POST(["comment"])
+        comment = Comment.objects.create(date=dt.datetime.now(
+        ), user=user, auctionListing=auctionListing, commentValue=commentValue)
+
+        # return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
+    return HttpResponseRedirect(reverse("index"))

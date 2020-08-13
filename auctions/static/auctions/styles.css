@@ -50,8 +50,9 @@ img {max-height: 250px;width: auto;}
     width: auto;
     height: 10%;
     flex: 0 1 24%;
-    background-color: thistle;
+    background-color: rgb(89, 139, 118);
     padding: 2rem 0;
+    border-radius: 1rem;
 }
 .add-listing {background-image: linear-gradient(to right, #7474BF 0%, #348AC7 51%, #7474BF 100%)}
 .add-listing:hover { background-position: right center; }
