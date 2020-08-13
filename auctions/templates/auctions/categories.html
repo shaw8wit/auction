@@ -1,0 +1,16 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}
+Categories
+{% endblock %}
+
+{% block body %}
+<div class="grid-container">
+    {% for category in categories %}
+    <div class="grid-item">
+        {{ category.name }}
+    </div>
+    {% endfor %}
+    <button class="gradient-button category">Add new Category</button>
+</div>
+{% endblock %}

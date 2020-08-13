@@ -93,3 +93,9 @@ def details(request, details):
         'item': item,
         'bids': bids,
     })
+
+
+def categories(request):
+    return render(request, "auctions/categories.html", {
+        'categories': Category.objects.all()
+    })

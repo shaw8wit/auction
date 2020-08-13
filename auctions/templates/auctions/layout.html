@@ -29,7 +29,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">
+                        <a class="nav-link" href="{% url 'categories' %}">
                             Categories
                         </a>
                     </li>
@@ -65,8 +65,10 @@
         </div>
     </nav>
     <hr>
-    {% block body %}
-    {% endblock %}
+    <div class="container">
+        {% block body %}
+        {% endblock %}
+    </div>
 </body>
 
 </html>
