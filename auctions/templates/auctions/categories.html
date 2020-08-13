@@ -5,12 +5,15 @@ Categories
 {% endblock %}
 
 {% block body %}
-<div class="grid-container">
-    {% for category in categories %}
-    <div class="grid-item">
-        {{ category.name }}
+<div class="text-center">
+    <div class="grid-container">
+        {% for category in categories %}
+        <div class="grid-item">
+            {{ category.name }}
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-    <button class="gradient-button category">Add new Category</button>
+
 </div>
+<button class="gradient-button category">Add new Category</button>
 {% endblock %}

@@ -15,10 +15,10 @@ class Category(models.Model):
 
 class AuctionListing(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    name = models.CharField(max_length=16)
+    name = models.CharField(max_length=50)
     date = models.DateTimeField()
-    startBid = models.DecimalField(decimal_places=2, max_digits=5)
-    description = models.CharField(max_length=128)
+    startBid = models.DecimalField(decimal_places=2, max_digits=7)
+    description = models.CharField(max_length=250)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     imageUrl = models.URLField()
 
@@ -29,7 +29,7 @@ class AuctionListing(models.Model):
 class Bid(models.Model):
     date = models.DateTimeField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    bidValue = models.DecimalField(decimal_places=2, max_digits=5)
+    bidValue = models.DecimalField(decimal_places=2, max_digits=7)
     auctionListing = models.ForeignKey(
         AuctionListing, on_delete=models.CASCADE)
 
@@ -42,7 +42,16 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     auctionListing = models.ForeignKey(
         AuctionListing, on_delete=models.CASCADE)
-    commentValue = models.CharField(max_length=128)
+    commentValue = models.CharField(max_length=250)
 
     def __str__(self):
         return f"{self.id} : {self.user.username} commented on {self.auctionListing.name} posted by {self.auctionListing.user.username} at {self.date} : {self.commentValue}"
+
+
+class Watchlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    auctionListing = models.ForeignKey(
+        AuctionListing, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.id} : {self.user.username} is watching {self.auctionListing.name}"

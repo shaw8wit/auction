@@ -1,4 +1,4 @@
-html, body {height: 100%;width: auto;}
+html, body {height: 100%;width: 100%;background-color: whitesmoke;}
 .parent a, a:hover {text-decoration: none;color: black;}
 .singleCard {
     height: 50%;
@@ -33,17 +33,25 @@ img {max-height: 250px;width: auto;}
     border-radius: 25px;
 }
 .gradient-button:hover{box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);margin: 8px 10px 12px;}
+.gradient-button:focus{outline: none;}
 .register {background-image: linear-gradient(to right, #DD5E89 0%, #F7BB97 51%, #DD5E89 100%)}
 .register:hover { background-position: right center; }
 .login {background-image: linear-gradient(to right, #00d2ff 0%, #3a7bd5 51%, #00d2ff 100%)}
 .login:hover { background-position: right center; }
-.category {background-image: linear-gradient(to right, #2BC0E4 0%, #EAECC6 51%, #2BC0E4 100%);color: rgba(0, 0, 0, 0.801);}
-.category:hover { background-position: right center; }
+.category {position: fixed; bottom: 10px;background-image: linear-gradient(to right, #2BC0E4 0%, #EAECC6 51%, #2BC0E4 100%);color: rgba(0, 0, 0, 0.801);}
+.category:hover { background-position: right center; margin-top: 22rem;}
 .grid-container {
     display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 .grid-item {
-    float: left;
+    min-width: 12rem;
+    width: auto;
+    height: 10%;
+    flex: 0 1 24%;
+    background-color: thistle;
+    padding: 2rem 0;
 }
 .add-listing {background-image: linear-gradient(to right, #7474BF 0%, #348AC7 51%, #7474BF 100%)}
 .add-listing:hover { background-position: right center; }
