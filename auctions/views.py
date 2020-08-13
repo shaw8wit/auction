@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Category, AuctionListing, Bid
+from .models import User, Category, AuctionListing, Bid, Comment
 
 import datetime as dt
 
@@ -86,12 +86,15 @@ def createListing(request):
     })
 
 
-def details(request, id):
+def details(request, id, message=None):
     item = AuctionListing.objects.get(id=id)
     bids = Bid.objects.filter(auctionListing=item)
+    comments = Comment.objects.filter(auctionListing=item)
     return render(request, "auctions/details.html", {
         'item': item,
         'bids': bids,
+        'comments': comments,
+        'message': message
     })
 
 
@@ -113,9 +116,25 @@ def comment(request, id):
     if request.method == 'POST':
         auctionListing = AuctionListing.objects.get(id=id)
         user = User.objects.get(username=request.POST["user"])
-        commentValue = request.POST(["comment"])
+        commentValue = request.POST["content"]
         comment = Comment.objects.create(date=dt.datetime.now(
         ), user=user, auctionListing=auctionListing, commentValue=commentValue)
+        comment.save()
+        return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
+    return HttpResponseRedirect(reverse("index"))
 
-        # return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
+
+def bid(request, id):
+    if request.method == 'POST':
+        auctionListing = AuctionListing.objects.get(id=id)
+        bidValue = request.POST["bid"]
+        for i in Bid.objects.filter(auctionListing=auctionListing):
+            if i.bidValue > int(bidValue):
+                return details(request, id, message="Place a Higher Bid!")
+        user = User.objects.get(username=request.POST["user"])
+        date = dt.datetime.now()
+        bid = Bid.objects.create(
+            date=date, user=user, bidValue=bidValue, auctionListing=auctionListing)
+        bid.save()
+        return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
     return HttpResponseRedirect(reverse("index"))

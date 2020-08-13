@@ -11,15 +11,19 @@
     {{ item.description }}
     <br>
     Start Bid : ${{ item.startBid }}
-    <br>
     {% for bid in bids %}
-    {{ bid }}
+    <div>{{ bid.user.username }} bid <strong>{{ bid.bidValue }}</strong> at {{ bid.date|date:'d M, h:i a' }}</div>
     {% empty %}
     No Bids Yet!
-    {% endfor %}<br>
-    <form action="#" method="post" class="my-3" style="max-width: 600px;">
+    {% endfor %}
+    {% if message %}
+    {{ message }}
+    {% endif %}
+    <form action="{% url 'bid' item.id %}" method="post" class="my-3" style="max-width: 600px;">
+        {% csrf_token %}
+        <input type="hidden" name="user" value="{{ user }}">
         <div class="form-group">
-            <input type="number" class="form-control" placeholder="Bid" step=".01">
+            <input type="number" name="bid" class="form-control" placeholder="Bid" step=".01">
         </div>
         <div class="row justify-content-around">
             <button class="btn btn-primary" type="submit">Place Bid</button>
@@ -38,13 +42,36 @@
         </ul>
     </div>
 
-    <form action="{% url 'comment' item.id %}" method="post" class="m-4 p-4">
-        {% csrf_token %}
-        <div class="form-group">
-            <textarea name="comment" rows="5" class="form-control" placeholder="Enter a comment"></textarea>
+    <div class="m-4 p-4">
+        Comments:
+        {% for comment in comments %}
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    Comment by: <strong>{{ comment.user.username }}</strong>
+                </div>
+                <div class="card-text">
+                    {{ comment.commentValue }}
+                </div>
+                Commented on: <strong>{{ comment.date }}</strong>
+            </div>
         </div>
-        <input type="hidden" name="user" value="{{ user }}">
-        <button class="btn btn-dark" type="submit">Comment</button>
-    </form>
+        {% empty %}
+        <div class="alert alert-info">
+            No Comments Yet
+        </div>
+        {% endfor %}
+
+        <form action="{% url 'comment' item.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <textarea name="content" rows="5" class="form-control" placeholder="Enter a comment"></textarea>
+            </div>
+            <input type="hidden" name="user" value="{{ user }}">
+            <button class="btn btn-dark py-2 px-4" type="submit">Comment</button>
+        </form>
+    </div>
+
+
 </div>
 {% endblock %}
