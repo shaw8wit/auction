@@ -15,5 +15,17 @@ Categories
     {% endfor %}
 </div>
 
-<button class="gradient-button category">Add new Category</button>
+
+<div class="add-category">
+    <form action="{% url 'categories' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="form-group col">
+                <input type="text" name="category" class="form-control category-input">
+            </div>
+            <button class="gradient-button category col">Add new Category</button>
+        </div>
+
+    </form>
+</div>
 {% endblock %}

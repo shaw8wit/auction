@@ -16,10 +16,12 @@
     {% empty %}
     No Bids Yet!
     {% endfor %}
-    {% if message %}
-    {{ message }}
-    {% endif %}
     <form action="{% url 'bid' item.id %}" method="post" class="my-3" style="max-width: 600px;">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
         {% csrf_token %}
         <input type="hidden" name="user" value="{{ user }}">
         <div class="form-group">

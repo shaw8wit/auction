@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib import messages
 
 from .models import User, Category, AuctionListing, Bid, Comment
 
@@ -86,19 +87,23 @@ def createListing(request):
     })
 
 
-def details(request, id, message=None):
+def details(request, id):
     item = AuctionListing.objects.get(id=id)
     bids = Bid.objects.filter(auctionListing=item)
     comments = Comment.objects.filter(auctionListing=item)
     return render(request, "auctions/details.html", {
         'item': item,
         'bids': bids,
-        'comments': comments,
-        'message': message
+        'comments': comments
     })
 
 
 def categories(request):
+    if request.method == 'POST':
+        category = request.POST["category"]
+        new_category = Category.objects.create(name=category)
+        new_category.save()
+        return HttpResponseRedirect(reverse("categories"))
     return render(request, "auctions/categories.html", {
         'categories': Category.objects.all()
     })
@@ -130,7 +135,8 @@ def bid(request, id):
         bidValue = request.POST["bid"]
         for i in Bid.objects.filter(auctionListing=auctionListing):
             if i.bidValue > int(bidValue):
-                return details(request, id, message="Place a Higher Bid!")
+                messages.warning(request, 'Bid a Higher Value!')
+                return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
         user = User.objects.get(username=request.POST["user"])
         date = dt.datetime.now()
         bid = Bid.objects.create(
