@@ -9,14 +9,19 @@ Categories
     {% for category in categories %}
     <a href="{% url 'filter' category.name %}">
         <div class="grid-item">
-            {{ category.name }}
+            {{ category.name|title }}
         </div>
     </a>
     {% endfor %}
 </div>
 
-
+{% if user.is_authenticated %}
 <div class="add-category">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
     <form action="{% url 'categories' %}" method="post">
         {% csrf_token %}
         <div class="row">
@@ -25,7 +30,8 @@ Categories
             </div>
             <button class="gradient-button category col">Add new Category</button>
         </div>
-
     </form>
 </div>
+{% endif %}
+
 {% endblock %}

@@ -25,7 +25,15 @@
         {% endfor %}
         {% endif %}
 
-        {% if item.active %}
+        {% if bid and item.active == False %}
+        {% if bid.user.username == user.username %}
+        <div class="alert alert-dark">
+            You Won The Auction!
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% if item.active and user.is_authenticated %}
         <form action="{% url 'bid' item.id %}" method="post" style="max-width: 600px;">
             {% csrf_token %}
             <input type="hidden" name="user" value="{{ user }}">
@@ -73,6 +81,7 @@
         </div>
         {% endfor %}
 
+        {% if user.is_authenticated %}
         <form action="{% url 'comment' item.id %}" method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -81,8 +90,20 @@
             <input type="hidden" name="user" value="{{ user }}">
             <button class="btn btn-dark py-2 px-4" type="submit">Comment</button>
         </form>
+
+        <form action="{% url 'watchlist' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="user" value="{{ user }}">
+            <input type="hidden" name="item" value="{{ item }}">
+            <button class="add-category gradient-button watchlist"
+                value="{% if user in watchlist %}0{% else %}1{% endif %}" name="status">
+                {% if user in watchlist %}Remove from{% else %}Add to{% endif %} Watchlist
+            </button>
+
+        </form>
+        {% endif %}
     </div>
 
-    <button class="add-category gradient-button">Add to Watchlist</button>
+
 </div>
 {% endblock %}

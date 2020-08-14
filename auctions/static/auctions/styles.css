@@ -58,4 +58,5 @@ img {max-height: 250px;width: auto;}
 .add-listing:hover { background-position: right center; }
 .add-category {position: fixed; bottom: 10px; right: 20px;}
 .category-input {margin-top: 15%; height: 60%;box-shadow:0 0 8px #2BC0E4;}
-.watchlist {background-image: linear-gradient(to right, #2BC0E4 0%, #EAECC6 51%, #2BC0E4 100%);color: rgba(0, 0, 0, 0.801);}
+.watchlist {background-image: linear-gradient(to right, #98FB98 0%, #FDF0AA 51%, #98FB98 100%);color: rgba(0, 0, 0, 0.801);}
+.watchlist:hover { background-position: right center; }
