@@ -13,7 +13,7 @@
     Start Bid : ${{ item.startBid }}
     <br>
     {% for bid in bids %}
-    <div>{{ bid.user.username }} bid <strong>{{ bid.bidValue }}</strong> at {{ bid.date|date:'d M, h:i a' }}</div>
+    <div>{{ bid.user.username }} bid <strong>{{ bid.bidValue }}</strong> at {{ bid.date|date:'M d, h:i a' }}</div>
     {% empty %}
     No Bids Yet!
     {% endfor %}
@@ -64,7 +64,7 @@
                 <div class="card-text">
                     {{ comment.commentValue }}
                 </div>
-                Commented on: <strong>{{ comment.date }}</strong>
+                Commented on: <strong>{{ comment.date|date:'M d, h:i a' }}</strong>
             </div>
         </div>
         {% empty %}
@@ -83,6 +83,6 @@
         </form>
     </div>
 
-
+    <button class="add-category gradient-button">Add to Watchlist</button>
 </div>
 {% endblock %}

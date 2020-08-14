@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
+from django.db.models import Max
 
 from .models import User, Category, AuctionListing, Bid, Comment
 
@@ -133,17 +134,23 @@ def bid(request, id):
     if request.method == 'POST':
         auctionListing = AuctionListing.objects.get(id=id)
         bidValue = request.POST["bid"]
-        for i in Bid.objects.filter(auctionListing=auctionListing):
-            if i.bidValue > int(bidValue):
-                messages.warning(request, 'Bid a Higher Value!')
-                return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
+        # for i in Bid.objects.filter(auctionListing=auctionListing):
+        #     if i.bidValue >=  or auctionListing.startBid > float(bidValue):
+        #         messages.warning(request, 'Bid a Higher Value!')
+        args = Bid.objects.filter(auctionListing=auctionListing)
+        value = args.aggregate(Max('bidValue'))['bidValue__max']
+        if value is None:
+            value = 0
+        if float(bidValue) < auctionListing.startBid or float(bidValue) <= value:
+            messages.warning(
+                request, f'Bid Higher than: {max(value, auctionListing.startBid)}!')
+            return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
         user = User.objects.get(username=request.POST["user"])
         date = dt.datetime.now()
         bid = Bid.objects.create(
             date=date, user=user, bidValue=bidValue, auctionListing=auctionListing)
         bid.save()
-        return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
 
 
 def end(request, itemId, userId):
