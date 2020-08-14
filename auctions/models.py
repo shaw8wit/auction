@@ -21,9 +21,10 @@ class AuctionListing(models.Model):
     description = models.CharField(max_length=250)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     imageUrl = models.URLField()
+    active = models.BooleanField()
 
     def __str__(self):
-        return f"{self.id} : {self.name} in {self.category.name}\nPosted at : {self.date}\nValue : {self.startBid}\nDescription : {self.description}\nPosted By : {self.user.username}"
+        return f"{self.id} : {self.name} in {self.category.name}\nPosted at : {self.date}\nValue : {self.startBid}\nDescription : {self.description}\nPosted By : {self.user.username} Active Status: {self.active}"
 
 
 class Bid(models.Model):

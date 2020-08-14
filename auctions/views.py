@@ -144,3 +144,17 @@ def bid(request, id):
         bid.save()
         return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
     return HttpResponseRedirect(reverse("index"))
+
+
+def end(request, itemId, userId):
+    auctionListing = AuctionListing.objects.get(id=itemId)
+    user = User.objects.get(id=userId)
+    if auctionListing.user == user:
+        auctionListing.active = False
+        auctionListing.save()
+        messages.success(
+            request, f'Auction for {auctionListing.name} successfully closed!')
+    else:
+        messages.info(
+            request, 'You are not authorized to end this listing!')
+    return HttpResponseRedirect(reverse("details", kwargs={'id': itemId}))

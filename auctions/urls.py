@@ -12,5 +12,6 @@ urlpatterns = [
     path("categories", views.categories, name="categories"),
     path("filter/<str:name>", views.filter, name="filter"),
     path("comment/<int:id>", views.comment, name="comment"),
-    path("bid/<int:id>", views.bid, name="bid")
+    path("bid/<int:id>", views.bid, name="bid"),
+    path("end/<int:itemId>/<int:userId>", views.end, name="end")
 ]

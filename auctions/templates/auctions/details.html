@@ -11,29 +11,38 @@
     {{ item.description }}
     <br>
     Start Bid : ${{ item.startBid }}
+    <br>
     {% for bid in bids %}
     <div>{{ bid.user.username }} bid <strong>{{ bid.bidValue }}</strong> at {{ bid.date|date:'d M, h:i a' }}</div>
     {% empty %}
     No Bids Yet!
     {% endfor %}
-    <form action="{% url 'bid' item.id %}" method="post" class="my-3" style="max-width: 600px;">
+
+    <div class="my-3">
         {% if messages %}
         {% for message in messages %}
         <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
         {% endfor %}
         {% endif %}
-        {% csrf_token %}
-        <input type="hidden" name="user" value="{{ user }}">
-        <div class="form-group">
-            <input type="number" name="bid" class="form-control" placeholder="Bid" step=".01">
-        </div>
-        <div class="row justify-content-around">
-            <button class="btn btn-primary" type="submit">Place Bid</button>
-            {% if item.user.username == user.username %}
-            <button class="btn btn-warning" type="button">End Auction</button>
-            {% endif %}
-        </div>
-    </form>
+
+        {% if item.active %}
+        <form action="{% url 'bid' item.id %}" method="post" style="max-width: 600px;">
+            {% csrf_token %}
+            <input type="hidden" name="user" value="{{ user }}">
+            <div class="form-group">
+                <input type="number" name="bid" class="form-control" placeholder="Bid" step=".01">
+            </div>
+            <div class="row justify-content-around">
+                <button class="btn btn-primary" type="submit">Place Bid</button>
+                {% if item.user.username == user.username %}
+                <a href="{% url 'end' item.id user.id %}">
+                    <button class="btn btn-warning" type="button">End Auction</button>
+                </a>
+                {% endif %}
+            </div>
+        </form>
+        {% endif %}
+    </div>
 
     <div class="container">
         Details
