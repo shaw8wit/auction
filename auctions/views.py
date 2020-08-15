@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
 
-from .models import User, Category, AuctionListing, Bid, Comment, Watchlist
+from .models import User, Category, AuctionListing, Bid, Comment
 
 import datetime as dt
 
@@ -104,15 +104,13 @@ def details(request, id):
     comments = Comment.objects.filter(auctionListing=item)
     value = bids.aggregate(Max('bidValue'))['bidValue__max']
     bid = None
-    watchlist = Watchlist.objects.filter(auctionListing=item)
     if value is not None:
         bid = Bid.objects.get(bidValue=value)
     return render(request, "auctions/details.html", {
         'item': item,
         'bids': bids,
         'comments': comments,
-        'bid': bid,
-        'watchlist': watchlist
+        'bid': bid
     })
 
 
@@ -190,5 +188,23 @@ def end(request, itemId, userId):
 
 @login_required
 def watchlist(request):
-    print(type(request.POST["status"]))
+    if request.method == 'POST':
+        user = User.objects.get(username=request.POST["user"])
+        auctionListing = AuctionListing.objects.get(id=request.POST["item"])
+        if request.POST["status"] == '1':
+            user.watchlist.add(auctionListing)
+        else:
+            user.watchlist.remove(auctionListing)
+        user.save()
+        return HttpResponseRedirect(
+            reverse("details", kwargs={'id': auctionListing.id}))
     return HttpResponseRedirect(reverse("index"))
+
+
+@login_required
+def watch(request):
+    user = request.user
+    obj = user.watchlist.all()
+    return render(request, "auctions/index.html", {
+        "objects": obj
+    })

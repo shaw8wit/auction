@@ -3,7 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    watchlist = models.ManyToManyField(
+        'AuctionListing', blank=True, related_name="userWatchlist")
 
 
 class Category(models.Model):
@@ -47,12 +48,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.id} : {self.user.username} commented on {self.auctionListing.name} posted by {self.auctionListing.user.username} at {self.date} : {self.commentValue}"
-
-
-class Watchlist(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    auctionListing = models.ForeignKey(
-        AuctionListing, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.id} : {self.user.username} is watching {self.auctionListing.name}"
