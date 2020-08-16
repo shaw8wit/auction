@@ -1,15 +1,14 @@
-from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse
-from django.contrib import messages
 from django.db.models import Max
+from django.utils import timezone
+from django.contrib import messages
+from django.shortcuts import render
+from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
 
 from .models import User, Category, AuctionListing, Bid, Comment
-
-import datetime as dt
 
 
 def index(request):
@@ -83,14 +82,15 @@ def register(request):
 def createListing(request):
     if request.method == 'POST':
         title = request.POST["title"]
-        date = dt.datetime.now()
         description = request.POST["description"]
         startBid = request.POST["startBid"]
         imageUrl = request.POST["url"]
+        if imageUrl == '':
+            imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png"
         category = Category.objects.get(id=request.POST["category"])
         user = User.objects.get(username=request.POST["user"])
         listing = AuctionListing.objects.create(
-            name=title, category=category, date=date, startBid=startBid, description=description, user=user, imageUrl=imageUrl, active=True)
+            name=title, category=category, date=timezone.now(), startBid=startBid, description=description, user=user, imageUrl=imageUrl, active=True)
         listing.save()
         return HttpResponseRedirect(reverse("index"))
     return render(request, "auctions/createListing.html", {
@@ -143,7 +143,7 @@ def comment(request, id):
         auctionListing = AuctionListing.objects.get(id=id)
         user = User.objects.get(username=request.POST["user"])
         commentValue = request.POST["content"]
-        comment = Comment.objects.create(date=dt.datetime.now(
+        comment = Comment.objects.create(date=timezone.now(
         ), user=user, auctionListing=auctionListing, commentValue=commentValue)
         comment.save()
         return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
@@ -164,9 +164,8 @@ def bid(request, id):
                 request, f'Bid Higher than: {max(value, auctionListing.startBid)}!')
             return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
         user = User.objects.get(username=request.POST["user"])
-        date = dt.datetime.now()
         bid = Bid.objects.create(
-            date=date, user=user, bidValue=bidValue, auctionListing=auctionListing)
+            date=timezone.now(), user=user, bidValue=bidValue, auctionListing=auctionListing)
         bid.save()
     return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
 
