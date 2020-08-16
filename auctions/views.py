@@ -84,11 +84,11 @@ def createListing(request):
         title = request.POST["title"]
         description = request.POST["description"]
         startBid = request.POST["startBid"]
+        category = Category.objects.get(id=request.POST["category"])
+        user = request.user
         imageUrl = request.POST["url"]
         if imageUrl == '':
             imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png"
-        category = Category.objects.get(id=request.POST["category"])
-        user = User.objects.get(username=request.POST["user"])
         listing = AuctionListing.objects.create(
             name=title, category=category, date=timezone.now(), startBid=startBid, description=description, user=user, imageUrl=imageUrl, active=True)
         listing.save()
@@ -141,7 +141,7 @@ def filter(request, name):
 def comment(request, id):
     if request.method == 'POST':
         auctionListing = AuctionListing.objects.get(id=id)
-        user = User.objects.get(username=request.POST["user"])
+        user = request.user
         commentValue = request.POST["content"]
         comment = Comment.objects.create(date=timezone.now(
         ), user=user, auctionListing=auctionListing, commentValue=commentValue)
@@ -163,7 +163,7 @@ def bid(request, id):
             messages.warning(
                 request, f'Bid Higher than: {max(value, auctionListing.startBid)}!')
             return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
-        user = User.objects.get(username=request.POST["user"])
+        user = request.user
         bid = Bid.objects.create(
             date=timezone.now(), user=user, bidValue=bidValue, auctionListing=auctionListing)
         bid.save()
@@ -171,9 +171,9 @@ def bid(request, id):
 
 
 @login_required
-def end(request, itemId, userId):
+def end(request, itemId):
     auctionListing = AuctionListing.objects.get(id=itemId)
-    user = User.objects.get(id=userId)
+    user = request.user
     if auctionListing.user == user:
         auctionListing.active = False
         auctionListing.save()
@@ -188,7 +188,7 @@ def end(request, itemId, userId):
 @login_required
 def watchlist(request):
     if request.method == 'POST':
-        user = User.objects.get(username=request.POST["user"])
+        user = request.user
         auctionListing = AuctionListing.objects.get(id=request.POST["item"])
         if request.POST["status"] == '1':
             user.watchlist.add(auctionListing)

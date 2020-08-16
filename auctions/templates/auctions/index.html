@@ -24,6 +24,7 @@
                             <h6>Created: {{ obj.date|date:"Y-m-d" }}</h6>
                             <h6>Description: {{ obj.description }}</h6>
                             <h6>{% if obj.active %}Active{% else %}Ended{% endif %}</h6>
+                            <h6>{% if obj in user.watchlist.all %}Watching{% else %}Not Watching{% endif %}</h6>
                         </div>
                     </div>
                 </div>

@@ -36,14 +36,13 @@
         {% if item.active and user.is_authenticated %}
         <form action="{% url 'bid' item.id %}" method="post" style="max-width: 600px;">
             {% csrf_token %}
-            <input type="hidden" name="user" value="{{ user }}">
             <div class="form-group">
                 <input type="number" name="bid" class="form-control" placeholder="Bid" step=".01">
             </div>
             <div class="row justify-content-around">
                 <button class="btn btn-primary" type="submit">Place Bid</button>
                 {% if item.user.username == user.username %}
-                <a href="{% url 'end' item.id user.id %}">
+                <a href="{% url 'end' item.id %}">
                     <button class="btn btn-warning" type="button">End Auction</button>
                 </a>
                 {% endif %}
@@ -87,13 +86,11 @@
             <div class="form-group">
                 <textarea name="content" rows="5" class="form-control" placeholder="Enter a comment"></textarea>
             </div>
-            <input type="hidden" name="user" value="{{ user }}">
             <button class="btn btn-dark py-2 px-4" type="submit">Comment</button>
         </form>
 
         <form action="{% url 'watchlist' %}" method="post" class="add-category">
             {% csrf_token %}
-            <input type="hidden" name="user" value="{{ user }}">
             <input type="hidden" name="item" value="{{ item.id }}">
             <input type="hidden" value="{% if item in user.watchlist.all %}0{% else %}1{% endif %}" name="status">
             <button class="gradient-button watchlist" type="submit">
