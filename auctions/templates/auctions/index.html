@@ -1,38 +1,24 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div class="parent">
-    <h2 class="m-3">Active Listings</h2>
+<h2 class="py-3 m-3">Auction Listings</h2>
 
+<div class="items-list">
     {% for obj in objects %}
     <a href="{% url 'details' obj.id %}">
-        {% if obj.active %}
-        <div class="mt-3 card singleCard">
-            {% else %}
-            <div class="mt-3 card singleCard" style="background-color: transparent;">
-                {% endif %}
-                <div class="card-body row">
-                    <div class="col">
-                        <img src="{{ obj.imageUrl }}" alt="Loading...">
-                    </div>
-                    <div class="col">
-                        <h2 class="card-title">
-                            {{ obj.name }}
-                        </h2>
-                        <div class="card-text">
-                            <h5>Price: ${{ obj.startBid }}</h5>
-                            <h6>Created: {{ obj.date|date:"Y-m-d" }}</h6>
-                            <h6>Description: {{ obj.description }}</h6>
-                            <h6>{% if obj.active %}Active{% else %}Ended{% endif %}</h6>
-                            <h6>{% if obj in user.watchlist.all %}Watching{% else %}Not Watching{% endif %}</h6>
-                        </div>
-                    </div>
-                </div>
+        <div class="item text-center" {% if obj.active != True %}style="background-color: red;" {% endif %}>
+            <img src="{{ obj.imageUrl }}" alt="Loading...">
+            <div class="details">
+                {{ obj.name }}
+                <h5>Price: ${{ obj.startBid }}</h5>
+                <h6><small>Created: {{ obj.date|date:"Y-m-d" }}</small></h6>
+                <h6>{% if obj.active %}Active{% else %}Ended{% endif %}</h6>
+                <h6>{% if obj in user.watchlist.all %}Watching{% else %}Not Watching{% endif %}</h6>
             </div>
+        </div>
     </a>
     {% empty %}
     <div class="alert alert-info text-center p-4 my-4 mx-2">No items Available</div>
     {% endfor %}
-
 </div>
 {% endblock %}

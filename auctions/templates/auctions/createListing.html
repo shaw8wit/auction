@@ -6,7 +6,7 @@ Create Listing
 
 {% block body %}
 
-<div class="container pt-4">
+<div class="pt-4 mt-4">
     <form action="{% url 'createListing' %}" method="post">
         {% csrf_token %}
         <div class="form-row form-group mt-2">

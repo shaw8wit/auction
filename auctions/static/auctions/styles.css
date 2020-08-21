@@ -1,18 +1,31 @@
-html, body {height: 100%;width: 100%;background-color: whitesmoke;}
-.parent a, a:hover {text-decoration: none;color: black;}
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background: whitesmoke;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
 .singleCard {
     height: 50%;
     width: auto;
     margin: 1%;
 }
-.parent {
-    width: 100%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
+
+.title {
+    font-size: 2rem;
 }
-.title{font-size: 2rem;}
-img {max-height: 250px;width: auto;}
+
+img {
+    max-height: 250px;
+    width: auto;
+}
+
 .gradient-button {
     margin: 10px;
     font-family: "Arial Black", Gadget, sans-serif;
@@ -26,37 +39,94 @@ img {max-height: 250px;width: auto;}
     box-shadow: 0 0 20px #eee;
     border-radius: 10px;
     width: 200px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
     cursor: pointer;
     display: inline-block;
     border-radius: 25px;
 }
-.gradient-button:hover{box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);margin: 8px 10px 12px;}
-.gradient-button:focus{outline: none;}
-.register {background-image: linear-gradient(to right, #DD5E89 0%, #F7BB97 51%, #DD5E89 100%)}
-.register:hover { background-position: right center; }
-.login {background-image: linear-gradient(to right, #00d2ff 0%, #3a7bd5 51%, #00d2ff 100%)}
-.login:hover { background-position: right center; }
-.category {background-image: linear-gradient(to right, #2BC0E4 0%, #EAECC6 51%, #2BC0E4 100%);color: rgba(0, 0, 0, 0.801);}
-.category:hover { background-position: right center;}
-.grid-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+
+.gradient-button:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    margin: 8px 10px 12px;
+    background-position: right center;
 }
+
+.gradient-button:focus {
+    outline: none;
+}
+
+.register {
+    background-image: linear-gradient(to right, #DD5E89 0%, #F7BB97 51%, #DD5E89 100%);
+}
+
+.login {
+    background-image: linear-gradient(to right, #00d2ff 0%, #3a7bd5 51%, #00d2ff 100%);
+}
+
+
+.category {
+    background-image: linear-gradient(to right, #2BC0E4 0%, #EAECC6 51%, #2BC0E4 100%);
+    color: rgba(0, 0, 0, 0.801);
+}
+
+.grid-container {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
 .grid-item {
-    min-width: 12rem;
-    width: auto;
-    height: 10%;
-    flex: 0 1 24%;
-    background-color: rgb(89, 139, 118);
-    padding: 2rem 0;
+    height: 4rem;
+    background-color: rgba(144, 238, 144, 0.26);
+    border: 2px solid lightgreen;
+    border-radius: 1rem;
+    display: grid;
+    align-content: center;
+}
+
+.add-listing {
+    background-image: linear-gradient(to right, #7474BF 0%, #348AC7 51%, #7474BF 100%);
+}
+
+.add-category {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+}
+
+.category-input {
+    margin-top: 15%;
+    height: 60%;
+    box-shadow: 0 0 8px #2BC0E4;
+}
+
+.watchlist {
+    background-image: linear-gradient(to right, #98FB98 0%, #FDF0AA 51%, #98FB98 100%);
+    color: rgba(0, 0, 0, 0.801);
+}
+
+.items-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    grid-gap: 25px;
+}
+
+.item {
+    background: yellowgreen;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    border-radius: 1rem;
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    grid-gap: 15px;
+    color: white;
+    font-weight: 100;
+}
+
+.item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 1rem;
 }
-.add-listing {background-image: linear-gradient(to right, #7474BF 0%, #348AC7 51%, #7474BF 100%)}
-.add-listing:hover { background-position: right center; }
-.add-category {position: fixed; bottom: 10px; right: 20px;}
-.category-input {margin-top: 15%; height: 60%;box-shadow:0 0 8px #2BC0E4;}
-.watchlist {background-image: linear-gradient(to right, #98FB98 0%, #FDF0AA 51%, #98FB98 100%);color: rgba(0, 0, 0, 0.801);}
-.watchlist:hover { background-position: right center; }
