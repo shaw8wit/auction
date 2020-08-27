@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light p-3">
+    <nav class="navbar sticky-top navbar-expand-lg py-3 nav__color navbar-light p-3">
         <div class="container">
             <a class="navbar-brand" href="{% url 'all' %}">Auctions</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -36,7 +36,7 @@
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'watch' %}">
-                            Watchlist ({{ user.watchlist.all.count }})
+                            Watchlist <span class="badge badge-light">{{ user.watchlist.all.count }}</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -67,7 +67,7 @@
         </div>
     </nav>
     <hr>
-    <div class="container">
+    <div class="container container-body">
         {% block body %}
         {% endblock %}
     </div>

@@ -78,8 +78,8 @@ img {
 
 .grid-item {
     height: 4rem;
-    background-color: rgba(144, 238, 144, 0.26);
-    border: 2px solid lightgreen;
+    background-color: rgba(255, 232, 191, 0.3);
+    border: 2px solid rgb(255, 220, 159);
     border-radius: 1rem;
     display: grid;
     align-content: center;
@@ -112,16 +112,19 @@ img {
     grid-gap: 25px;
 }
 
+@media only screen and (max-width: 490px) {
+    .items-list {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
 .item {
-    background: yellowgreen;
+    background: rgba(255, 228, 181, 0.7);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     border-radius: 1rem;
     padding: 20px;
     display: grid;
-    grid-template-rows: 2fr 1fr;
-    grid-gap: 15px;
-    color: white;
-    font-weight: 100;
+    grid-template-rows: 2.5fr 1fr;
 }
 
 .item img {
@@ -129,4 +132,29 @@ img {
     height: 100%;
     object-fit: cover;
     border-radius: 1rem;
+}
+
+.nav__color {
+    background: rgba(193, 145, 255, 0.377);
+}
+
+.badge {
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+}
+
+.status--active {
+    background: rgba(190, 255, 92, 0.8);
+}
+
+.status--inactive {
+    background: rgba(255, 190, 92, 0.8);
+}
+
+.status--watching {
+    background: rgba(172, 128, 255, 0.281);
+}
+
+.status--notwatching {
+    background: rgba(128, 194, 255, 0.8);
 }
