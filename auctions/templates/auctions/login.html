@@ -8,7 +8,7 @@
     <div class="alert alert-danger">{{ message }}</div>
     {% endif %}
 
-    <div class="card">
+    <div class="card inout">
         <div class="card-body m-4">
             <h2 class="card-title">Login</h2>
 
@@ -23,7 +23,7 @@
                 <input class="gradient-button login" type="submit" value="Login">
             </form>
 
-            Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+            Don't have an account? <a href="{% url 'register' %}"><strong>Register here.</strong></a>
         </div>
     </div>
 

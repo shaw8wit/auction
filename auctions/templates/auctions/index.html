@@ -6,7 +6,8 @@
 <div class="items-list">
     {% for obj in objects %}
     <a href="{% url 'details' obj.id %}">
-        <div class="item text-center" {% if obj.active != True %}style="background-color: mistyrose;" {% endif %}>
+        <div class="item text-center" {% if obj.active != True %}style="background-color: rgba(255, 220, 220, 0.7);"
+            {% endif %}>
             <img src="{{ obj.imageUrl }}" alt="Loading...">
             <div class="details">
                 <h5>{{ obj.name }}</h5>
