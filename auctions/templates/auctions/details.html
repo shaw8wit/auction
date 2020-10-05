@@ -5,20 +5,27 @@
 {% endblock %}
 
 {% block body %}
-<div class="container parent">
-    <h4>Listing: <span class="title">{{ item.name }}</span></h4>
-    <img class="big" src="{{ item.imageUrl }}" alt="{{ item.id }}">
-    {{ item.description }}
-    <br>
-    Start Bid : ${{ item.startBid }}
-    <br>
+<div class="container detail-page">
+    <h4 class="mb-3">Listing: <span class="title">{{ item.name }}</span></h4>
+    <div class="image">
+        <img class="big" src="{{ item.imageUrl }}" alt="{{ item.id }}">
+    </div>
+    <div class="item-description">
+        {{ item.description }}
+    </div>
+    <div class="bid">
+        Start Bid : <strong>${{ item.startBid }}</strong>
+    </div>
     {% for bid in bids %}
-    <div>{{ bid.user.username }} bid <strong>{{ bid.bidValue }}</strong> at {{ bid.date|date:'M d, h:i a' }}</div>
+    <div class="text-center">{{ bid.user.username }} bid <strong>{{ bid.bidValue }}</strong> at
+        {{ bid.date|date:'M d, h:i a' }}</div>
     {% empty %}
-    No Bids Yet!
+    <div class="alert alert-warning text-center">
+        No Bids Yet!
+    </div>
     {% endfor %}
 
-    <div class="my-3">
+    <section class="my-3">
         {% if messages %}
         {% for message in messages %}
         <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
@@ -26,15 +33,19 @@
         {% endif %}
 
         {% if bid and item.active == False %}
-        {% if bid.user.username == user.username %}
-        <div class="alert alert-dark">
+
+        <div class="alert alert-dark text-center">
+            {% if bid.user.username == user.username %}
             You Won The Auction!
+            {% else %}
+            <strong>{{ bid.user.username }}</strong> won, with a bid of <strong>${{ bid.bidValue }}</strong>
+            {% endif %}
         </div>
-        {% endif %}
+
         {% endif %}
 
         {% if item.active and user.is_authenticated %}
-        <form action="{% url 'bid' item.id %}" method="post" style="max-width: 600px;">
+        <form action="{% url 'bid' item.id %}" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <input type="number" name="bid" class="form-control" placeholder="Bid" step=".01">
@@ -49,33 +60,32 @@
             </div>
         </form>
         {% endif %}
-    </div>
+    </section>
 
-    <div class="container">
-        Details
+    <section>
+        Details:
         <ul>
-            <li>Listed By: {{ item.user.username }}</li>
-            <li>Category: {{ item.category.name }}</li>
-            <li>Listed On: {{ item.date }}</li>
+            <li>Listed By: <strong>{{ item.user.username }}</strong></li>
+            <li>Category: <strong>{{ item.category.name }}</strong></li>
+            <li>Listed On: <strong>{{ item.date }}</strong></li>
         </ul>
-    </div>
+    </section>
 
-    <div class="m-4 p-4">
+    <section>
         Comments:
         {% for comment in comments %}
-        <div class="card">
+        <div class="card comment">
             <div class="card-body">
                 <div class="card-title">
-                    Comment by: <strong>{{ comment.user.username }}</strong>
+                    <strong>{{ comment.user.username }}</strong>: {{ comment.commentValue }}
                 </div>
                 <div class="card-text">
-                    {{ comment.commentValue }}
+                    <small>Commented on: <strong>{{ comment.date|date:'M d, h:i a' }}</strong></small>
                 </div>
-                Commented on: <strong>{{ comment.date|date:'M d, h:i a' }}</strong>
             </div>
         </div>
         {% empty %}
-        <div class="alert alert-info">
+        <div class="alert alert-info mt-2">
             No Comments Yet
         </div>
         {% endfor %}
@@ -84,7 +94,7 @@
         <form action="{% url 'comment' item.id %}" method="post">
             {% csrf_token %}
             <div class="form-group">
-                <textarea name="content" rows="5" class="form-control" placeholder="Enter a comment"></textarea>
+                <textarea name="content" rows="4" class="form-control" placeholder="Enter a comment"></textarea>
             </div>
             <button class="btn btn-dark py-2 px-4" type="submit">Comment</button>
         </form>
@@ -98,7 +108,7 @@
             </button>
         </form>
         {% endif %}
-    </div>
+    </section>
 
 
 </div>

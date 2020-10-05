@@ -168,3 +168,39 @@ body {
     background-color: rgba(247, 255, 224, 0.507);
     backdrop-filter: blur(10px);
 }
+
+.detail-page {
+    padding: 3rem;
+    background-color: #cfd0d4e0;
+    border-radius: 1rem;
+}
+
+.comment {
+    margin: 1rem 0rem;
+    background-color: #e7eaf1d0;
+}
+
+.big {
+    width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+
+.image {
+    height: 60vh;
+}
+
+.item-description {
+    font-size: 22px;
+    text-align: center;
+    margin: 1rem 0rem;
+}
+
+.bid {
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+}
+
+* {
+    font-family: 'Baloo Da 2', cursive;
+}

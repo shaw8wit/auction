@@ -105,7 +105,7 @@ def details(request, id):
     value = bids.aggregate(Max('bidValue'))['bidValue__max']
     bid = None
     if value is not None:
-        bid = Bid.objects.get(bidValue=value)
+        bid = Bid.objects.filter(bidValue=value)[0]
     return render(request, "auctions/details.html", {
         'item': item,
         'bids': bids,
@@ -142,10 +142,11 @@ def comment(request, id):
     if request.method == 'POST':
         auctionListing = AuctionListing.objects.get(id=id)
         user = request.user
-        commentValue = request.POST["content"]
-        comment = Comment.objects.create(date=timezone.now(
-        ), user=user, auctionListing=auctionListing, commentValue=commentValue)
-        comment.save()
+        commentValue = request.POST["content"].strip()
+        if(commentValue != ""):
+            comment = Comment.objects.create(date=timezone.now(
+            ), user=user, auctionListing=auctionListing, commentValue=commentValue)
+            comment.save()
         return HttpResponseRedirect(reverse("details", kwargs={'id': id}))
     return HttpResponseRedirect(reverse("index"))
 
