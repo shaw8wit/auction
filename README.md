@@ -1,5 +1,15 @@
 # Auction
+
+![Github Followers](https://img.shields.io/github/followers/shaw8wit?label=Follow&style=plastic)
+![GitHub stars](https://img.shields.io/github/stars/shaw8wit/Auction?style=plastic)
+![GitHub forks](https://img.shields.io/github/forks/shaw8wit/Auction?style=plastic)
+![GitHub watchers](https://img.shields.io/github/watchers/shaw8wit/Auction?style=plastic)
+
+![Demo Screen](https://github.com/shaw8wit/Auction/blob/master/screenshots/watchlist.png)
+
 A fully functional Auction website in Django. With configured admin panel.
+
+View all screenshots [here](https://github.com/shaw8wit/Auction/blob/master/screenshots/)
 
 ## About
 + This is a dummy-website for holding Auctions.
